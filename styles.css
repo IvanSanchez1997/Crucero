@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  header, footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 20px;
+  }
+  nav ul {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    padding: 0;
+  }
+  nav ul li {
+    margin: 0 15px;
+  }
+
+  #countdown {
+    text-align: center;
+    margin-top: 50px;
+  }
+  #timer {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+  }
