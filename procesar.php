@@ -3,12 +3,15 @@
 include 'connect.php';
 
 // 2. Crear la conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+//$conn = new mysqli($servername, $username, $password, $dbname);
+
+// ESTOS DOS PUNTOS ANTERIORES PARA QUE LOS QUIERO SI YA ESTOY INCLUYENDO EL CONNECT.PHP????
+//?????????????
 
 // Verificar la conexión
-if ($conn->connect_error) {
-  die("Conexión fallida: " . $conn->connect_error);
-}
+//if ($conn->connect_error) {
+  //die("Conexión fallida: " . $conn->connect_error);
+//}
 
 // Comprobar de dónde viene el formulario
 if (isset($_POST['form_type'])) {
@@ -66,8 +69,27 @@ if (isset($_POST['form_type'])) {
     header("Location: reginfoChecklist.php");
     exit();
   }
-}
 
+
+  // Si viene de registrar una Excursión
+
+  elseif ($_POST['form_type'] == 'excursiones') {
+    $excursion = $_POST['excursiones'];
+    $descripcion = $_POST['Descripcion_excursiones'];
+    $destinocexcursion = $_POST['Destino_excursiones'];
+    // INSERTAR LOS DATOS:
+    $sql = "INSERT INTO excursiones (nombre, descripcion, destino_id) VALUES ('$excursion', '$descripcion', '$destinocexcursion')";
+    //COMPROBAR SI SE HAN REGISTRADO:
+    if ($conn->query($sql) === TRUE) {
+      echo "Registro agregado con éxito";
+    } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    // Redirigir de vuelta a la página principal
+    header("Location: reginfoExcursiones.php");
+    exit();
+  }
+}
 // 5. Cerrar la conexión
 $conn->close();
 

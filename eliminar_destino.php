@@ -6,13 +6,28 @@ $id = $_POST['id'];
 
 // Comprobar si el id no está vacío
 if (!empty($id)) {
-  // Preparar y ejecutar la consulta SQL para eliminar el destino
-  $sql = "DELETE FROM destinos WHERE id = '$id'";
+  // Verificar si el destino tiene excursiones asociadas
+  $sql = "SELECT COUNT(*) AS total FROM excursiones WHERE destino_id = $id";
+  $result = $conn->query($sql);
+  $row = $result->fetch_assoc();
   
-  if ($conn->query($sql) === TRUE) {
-    echo "Destino eliminado con éxito.";
+  if ($row['total'] > 0) {
+      // Si tiene excursiones, no permitir la eliminación
+      echo "<script>
+          alert('No se puede eliminar el destino porque tiene excursiones asociadas.');
+          window.location.href = 'reginfodestino.php';
+      </script>";
   } else {
-    echo "Error al eliminar el destino: " . $conn->error;
+      // Si no tiene excursiones, proceder con la eliminación
+      $sql = "DELETE FROM destinos WHERE id = '$id'";
+      if ($conn->query($sql) === TRUE) {
+          echo "<script>
+              alert('Destino eliminado con éxito.');
+              window.location.href = 'reginfodestino.php';
+          </script>";
+      } else {
+          echo "Error al eliminar el destino: " . $conn->error;
+      }
   }
 } else {
   echo "No se recibió ningún id de destino.";
@@ -20,8 +35,4 @@ if (!empty($id)) {
 
 // Cerrar la conexión a la base de datos
 $conn->close();
-
-// Redirigir de vuelta a la página principal después de eliminar
-header("Location: reginfodestino.php");
-exit();
 ?>

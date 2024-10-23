@@ -17,7 +17,7 @@
   <nav>
     <ul>
       <li><a href="index.html">Página principal</a></li>
-      <li><a href="reginfoDestino.html">Destinos</a></li>
+      <li><a href="reginfoDestino.php">Destinos</a></li>
       <li><a href="reginfoChecklist.php">Checklist</a></li>
       <li><a href="reginfoContactos.html">Contactos</a></li>
       <li><a href="reginfoDocumentacion.html">Documentación</a></li>
@@ -42,10 +42,10 @@
     <?php
     include 'connect.php';
     
-    $sqle = "SELECT nombre FROM destinos";
+    $sqle = "SELECT id, nombre FROM destinos";
     $result = $conn->query($sqle);
     while ($row = $result->fetch_assoc()) {
-      echo "<option value='" . $row["nombre"] . "'>" . $row["nombre"] . "</option>";
+      echo "<option value='" . $row["id"] . "'>" . $row["nombre"] . "</option>";
     }
     
     $conn->close();
@@ -63,7 +63,7 @@ $sql = "SELECT id, nombre, descripcion, destino_id FROM excursiones";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-  echo "<h2>Destinos registrados</h2>";
+  echo "<h2>Excursiones registrados</h2>";
   echo "<table border='1'>
           <tr>
             <th>Excursion</th>
